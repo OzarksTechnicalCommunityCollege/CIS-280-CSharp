@@ -34,7 +34,7 @@ public class Book
 
     public void CheckOut()
     {
-        if (!IsAvailable)
+        if (AvailableCopies < 0)
             throw new InvalidOperationException($"No available copies of '{Title}' to check out.");
 
         AvailableCopies--;
@@ -42,7 +42,7 @@ public class Book
 
     public void Return()
     {
-        if (AvailableCopies >= TotalCopies)
+        if (AvailableCopies > TotalCopies)
             throw new InvalidOperationException($"All copies of '{Title}' are already returned.");
 
         AvailableCopies++;

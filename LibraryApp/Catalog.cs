@@ -16,7 +16,7 @@ public class Catalog
         if (book is null)
             throw new ArgumentNullException(nameof(book));
 
-        if (_books.Any(b => b.Isbn == book.Isbn))
+        if (_books.Any(b => b.Title == book.Title))
             throw new InvalidOperationException($"A book with ISBN '{book.Isbn}' already exists in the catalog.");
 
         _books.Add(book);
@@ -33,7 +33,7 @@ public class Catalog
             return new List<Book>();
 
         return _books
-            .Where(b => b.Title.Contains(titleQuery, StringComparison.OrdinalIgnoreCase))
+            .Where(b => b.Title.Contains(titleQuery, StringComparison.Ordinal))
             .ToList();
     }
 
@@ -50,10 +50,7 @@ public class Catalog
     public void CheckOutBook(string isbn)
     {
         var book = FindByIsbn(isbn);
-        if (book is null)
-            throw new InvalidOperationException($"No book found with ISBN '{isbn}'.");
-
-        book.CheckOut();
+        book!.CheckOut();
     }
 
     public void ReturnBook(string isbn)
